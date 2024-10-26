@@ -8,13 +8,13 @@ speak_as_ai()
 recognizer = sr.Recognizer()
 
 def listenUserInput():
-     global IS_RUNNING
+     global IS_RUNNING,FEMALE_MALE
      with sr.Microphone() as source:
           try:
-               recognizer.adjust_for_ambient_noise(source, duration=1)
-               recognizer.energy_threshold = 5000
+               # recognizer.adjust_for_ambient_noise(source, duration=1)
+               # recognizer.energy_threshold = 5000
                print("Ai is Listening.....")
-               audio = recognizer.listen(source, timeout=10, phrase_time_limit=10)
+               audio = recognizer.listen(source,timeout=2,phrase_time_limit=6)
                print()
                user_input_text = recognizer.recognize_google(audio)
                print("You said: " + user_input_text)
@@ -24,7 +24,17 @@ def listenUserInput():
                     speak_as_ai("Exit The Porgram, See you again Insha Allah")
                     IS_RUNNING = False
                     return
-               predict_question_from_model(user_input_text,ai_speaker=speak_as_ai)
+               if user_input_text in ["change voice","voice change","change your voice"]:
+                    if FEMALE_MALE==0:
+                         FEMALE_MALE=  1
+
+                         speak_as_ai("Changed Voice into Female")
+                    else:
+                         FEMALE_MALE=0
+                         speak_as_ai("changed voice into male")
+
+                    return
+               predict_question_from_model(user_input_text,ai_speaker=speak_as_ai,voice=FEMALE_MALE)
 
           except sr.UnknownValueError:
                speak_as_ai("I don't get it, Please say it again")

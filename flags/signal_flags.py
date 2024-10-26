@@ -1,2 +1,3 @@
 
 IS_RUNNING =True
+FEMALE_MALE =1

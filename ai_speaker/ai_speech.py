@@ -11,3 +11,7 @@ def speak_as_ai(text=DEFAUL_TEXT, rate=190,volume =1.0,voice=1):
     engine.say(text)
     engine.runAndWait()
     engine.stop()
+
+
+
+
